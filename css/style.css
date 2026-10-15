@@ -1,0 +1,490 @@
+
+/* =========================
+   1. COLOR PALETTE
+========================= */
+
+:root {
+    --cream: #F5F3EE;
+    --mist-blue: #DCE5ED;
+    --dusty-blue: #849CB2;
+    --slate-blue: #3D5268;
+
+    --text: #344657;
+    --muted-text: #788591;
+    --border: #E1E0DB;
+    --card: #FCFBF8;
+    --white: #FFFFFF;
+
+    --radius-card: 14px;
+    --radius-small: 10px;
+}
+
+
+/* =========================
+   2. BASIC RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background: var(--cream);
+    color: var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* =========================
+   3. HEADER
+========================= */
+
+.site-header {
+    width: min(100% - 48px, 1000px);
+    margin: 0 auto;
+    padding: 24px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+    background: var(--slate-blue);
+    color: var(--white);
+
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.brand-name {
+    color: var(--slate-blue);
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.brand-dot {
+    color: var(--dusty-blue);
+}
+
+.header-label {
+    color: var(--muted-text);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+
+/* =========================
+   4. MAIN CONTENT
+========================= */
+
+.main-content {
+    flex: 1;
+    width: min(100% - 48px, 1000px);
+    margin: 0 auto;
+}
+
+.intro {
+    padding: 54px 0 36px;
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+
+    color: var(--dusty-blue);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+h1,
+h2,
+p {
+    overflow-wrap: break-word;
+}
+
+h1 {
+    margin: 0;
+
+    color: var(--slate-blue);
+    font-size: clamp(30px, 5vw, 43px);
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+}
+
+.intro-description {
+    margin: 13px 0 0;
+
+    color: var(--muted-text);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   5. LANGUAGE CATALOG
+========================= */
+
+.language-section {
+    padding-bottom: 52px;
+}
+
+.catalog-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.catalog-heading h2 {
+    margin: 0;
+
+    color: var(--slate-blue);
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.language-count {
+    color: var(--muted-text);
+    font-size: 12px;
+}
+
+
+/* Search field */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 48px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--card);
+
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--dusty-blue);
+    box-shadow: 0 0 0 3px rgba(132, 156, 178, 0.16);
+}
+
+.search-icon {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    color: var(--muted-text);
+}
+
+.search-box input {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    border: 0;
+    outline: 0;
+    background: transparent;
+
+    color: var(--text);
+    font-size: 14px;
+}
+
+.search-box input::placeholder {
+    color: #929BA3;
+}
+
+
+/* Responsive card grid */
+
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+
+/* Individual language card */
+
+.language-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+    min-height: 76px;
+    padding: 12px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--card);
+
+    transition:
+        border-color 160ms ease,
+        background-color 160ms ease,
+        transform 160ms ease;
+}
+
+.language-card:hover {
+    border-color: #C4D0DA;
+    background: var(--white);
+    transform: translateY(-2px);
+}
+
+.language-card:focus-visible {
+    outline: 3px solid var(--dusty-blue);
+    outline-offset: 3px;
+}
+
+
+/* Small image thumbnail */
+
+.language-image {
+    display: block;
+    flex: 0 0 44px;
+
+    width: 44px;
+    height: 44px;
+
+    overflow: hidden;
+    border-radius: 9px;
+    background: var(--mist-blue);
+    object-fit: cover;
+}
+
+
+/* Image placeholder shown until artwork is added */
+
+.image-placeholder {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 9px;
+    background: var(--mist-blue);
+    color: var(--slate-blue);
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.language-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.language-name {
+    margin: 0;
+
+    color: var(--slate-blue);
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.language-native {
+    margin: 4px 0 0;
+
+    color: var(--muted-text);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.language-status {
+    display: block;
+    margin-top: 6px;
+
+    color: var(--muted-text);
+    font-size: 10px;
+}
+
+
+/* No search results */
+
+.empty-message {
+    padding: 30px 12px;
+
+    color: var(--muted-text);
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* =========================
+   6. FOOTER
+========================= */
+
+.site-footer {
+    width: min(100% - 48px, 1000px);
+    margin: 0 auto;
+    padding: 20px 0 24px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted-text);
+    font-size: 11px;
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+
+/* =========================
+   7. RESPONSIVE DESIGN
+========================= */
+
+/* Small mobile phones */
+
+@media (max-width: 420px) {
+    .site-header,
+    .main-content,
+    .site-footer {
+        width: calc(100% - 28px);
+    }
+
+    .site-header {
+        padding: 18px 0;
+    }
+
+    .brand-name {
+        font-size: 21px;
+    }
+
+    .header-label {
+        max-width: 110px;
+        font-size: 8px;
+        letter-spacing: 0.8px;
+        text-align: right;
+    }
+
+    .intro {
+        padding: 38px 0 28px;
+    }
+
+    .eyebrow {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    h1 {
+        font-size: 30px;
+        letter-spacing: -1px;
+    }
+
+    .intro-description {
+        font-size: 13px;
+    }
+
+    .language-grid {
+        gap: 8px;
+    }
+
+    .language-card {
+        gap: 8px;
+        min-height: 70px;
+        padding: 9px;
+    }
+
+    .language-image,
+    .image-placeholder {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .language-name {
+        font-size: 12px;
+    }
+
+    .language-native {
+        font-size: 11px;
+    }
+}
+
+/* Wider screens */
+
+@media (min-width: 700px) {
+    .language-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .language-card {
+        padding: 14px;
+    }
+}
+
+@media (min-width: 960px) {
+    .language-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

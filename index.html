@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="REWORD helps you build vocabulary through repetition.">
+
+    <meta name="theme-color" content="#F5F3EE">
+
+    <title>REWORD — Vocabulary Practice</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+
+        <a class="brand" href="index.html" aria-label="REWORD home">
+            <span class="brand-mark">R.</span>
+            <span class="brand-name">reword<span class="brand-dot">.</span></span>
+        </a>
+
+        <span class="header-label">VOCABULARY PRACTICE</span>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- INTRODUCTION -->
+        <section class="intro">
+            <p class="eyebrow">YOUR LANGUAGE JOURNEY STARTS HERE</p>
+
+            <h1>Choose your language.</h1>
+
+            <p class="intro-description">
+                Build your vocabulary, one word at a time.
+            </p>
+        </section>
+
+
+        <!-- LANGUAGE CATALOG -->
+        <section class="language-section">
+
+            <div class="catalog-heading">
+                <h2>Explore languages</h2>
+
+                <span id="language-count" class="language-count">
+                    15 languages
+                </span>
+            </div>
+
+
+            <!-- SEARCH -->
+            <label class="search-box" for="language-search">
+
+                <svg
+                    class="search-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                >
+                    <circle
+                        cx="10.8"
+                        cy="10.8"
+                        r="6.8"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                    />
+
+                    <path
+                        d="m16 16 4.3 4.3"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                    />
+                </svg>
+
+                <input
+                    type="search"
+                    id="language-search"
+                    placeholder="Search languages..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+            </label>
+
+
+            <!-- JAVASCRIPT WILL INSERT LANGUAGE CARDS HERE -->
+            <div
+                id="language-grid"
+                class="language-grid"
+            ></div>
+
+
+            <!-- EMPTY SEARCH RESULT -->
+            <p id="empty-message" class="empty-message" hidden>
+                No languages found. Try another search.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>REWORD · Repeat. Recall. Remember.</p>
+    </footer>
+
+
+    <!-- JAVASCRIPT: PLACED AT THE BOTTOM -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
