@@ -6,81 +6,21 @@
 ========================= */
 
 const languages = [
-    {
-        name: "Arabic",
-        native: "العربية",
-        image: "arabic.webp"
-    },
-    {
-        name: "Japanese",
-        native: "日本語",
-        image: "japanese.webp"
-    },
-    {
-        name: "German",
-        native: "Deutsch",
-        image: "german.webp"
-    },
-    {
-        name: "Italian",
-        native: "Italiano",
-        image: "italian.webp"
-    },
-    {
-        name: "Turkish",
-        native: "Türkçe",
-        image: "turkish.webp"
-    },
-    {
-        name: "Chinese (Mandarin)",
-        native: "中文",
-        image: "chinese.webp"
-    },
-    {
-        name: "Spanish",
-        native: "Español",
-        image: "spanish.webp"
-    },
-    {
-        name: "Korean",
-        native: "한국어",
-        image: "korean.webp"
-    },
-    {
-        name: "French",
-        native: "Français",
-        image: "french.webp"
-    },
-    {
-        name: "Portuguese",
-        native: "Português",
-        image: "portuguese.webp"
-    },
-    {
-        name: "Russian",
-        native: "Русский",
-        image: "russian.webp"
-    },
-    {
-        name: "Vietnamese",
-        native: "Tiếng Việt",
-        image: "vietnamese.webp"
-    },
-    {
-        name: "Malay",
-        native: "Bahasa Melayu",
-        image: "malay.webp"
-    },
-    {
-        name: "Hindi",
-        native: "हिन्दी",
-        image: "hindi.webp"
-    },
-    {
-        name: "Kurdish",
-        native: "Kurdî · کوردی",
-        image: "kurdish.webp"
-    }
+    { name: "Arabic", native: "العربية", image: "arabic.webp" },
+    { name: "Chinese (Mandarin)", native: "中文", image: "chinese.webp" },
+    { name: "French", native: "Français", image: "french.webp" },
+    { name: "German", native: "Deutsch", image: "german.webp" },
+    { name: "Hindi", native: "हिन्दी", image: "hindi.webp" },
+    { name: "Italian", native: "Italiano", image: "italian.webp" },
+    { name: "Japanese", native: "日本語", image: "japanese.webp" },
+    { name: "Korean", native: "한국어", image: "korean.webp" },
+    { name: "Kurdish", native: "Kurdî · کوردی", image: "kurdish.webp" },
+    { name: "Malay", native: "Bahasa Melayu", image: "malay.webp" },
+    { name: "Portuguese", native: "Português", image: "portuguese.webp" },
+    { name: "Russian", native: "Русский", image: "russian.webp" },
+    { name: "Spanish", native: "Español", image: "spanish.webp" },
+    { name: "Turkish", native: "Türkçe", image: "turkish.webp" },
+    { name: "Vietnamese", native: "Tiếng Việt", image: "vietnamese.webp" }
 ];
 
 
@@ -89,20 +29,24 @@ const languages = [
 ========================= */
 
 const languageGrid = document.querySelector("#language-grid");
-const searchInput = document.querySelector("#language-search");
 const languageCount = document.querySelector("#language-count");
 const emptyMessage = document.querySelector("#empty-message");
+const alphabetFilter = document.querySelector("#alphabet-filter");
+
+const aboutDialog = document.querySelector("#about-dialog");
+const aboutOpen = document.querySelector("#about-open");
+const aboutClose = document.querySelector("#about-close");
 
 
 /* =========================
-   3. CREATE LANGUAGE CARDS
+   3. CREATE LANGUAGE CARD
 ========================= */
 
 function createLanguageCard(language) {
     const card = document.createElement("article");
     card.className = "language-card";
 
-    // Image thumbnail
+    // Thumbnail
     const image = document.createElement("img");
     image.className = "language-image";
     image.src = `assets/images/${language.image}`;
@@ -112,10 +56,10 @@ function createLanguageCard(language) {
     image.loading = "lazy";
     image.decoding = "async";
 
-    // Show a simple placeholder if the image
-    // has not been added yet or cannot load.
+    // Placeholder if the image is unavailable
     image.addEventListener("error", () => {
         const placeholder = document.createElement("div");
+
         placeholder.className = "image-placeholder";
         placeholder.setAttribute("aria-hidden", "true");
         placeholder.textContent = "RW";
@@ -167,29 +111,124 @@ function renderLanguages(items) {
 
 
 /* =========================
-   5. SEARCH LANGUAGES
+   5. CREATE A–Z FILTER
 ========================= */
 
-function searchLanguages() {
-    const query = searchInput.value
-        .trim()
-        .toLocaleLowerCase();
+let selectedLetter = "ALL";
 
-    const filteredLanguages = languages.filter((language) => {
-        const searchableText =
-            `${language.name} ${language.native}`.toLocaleLowerCase();
+function createFilterButton(label, value, disabled = false) {
+    const button = document.createElement("button");
 
-        return searchableText.includes(query);
+    button.type = "button";
+    button.className = "letter-button";
+    button.textContent = label;
+    button.disabled = disabled;
+
+    button.setAttribute(
+        "aria-pressed",
+        String(selectedLetter === value)
+    );
+
+    if (value === "ALL") {
+        button.classList.add("all-button");
+    }
+
+    button.addEventListener("click", () => {
+        selectedLetter = value;
+        updateFilter();
     });
 
-    renderLanguages(filteredLanguages);
+    return button;
+}
+
+function createAlphabetFilter() {
+    const fragment = document.createDocumentFragment();
+
+    // All languages button
+    fragment.appendChild(
+        createFilterButton("All", "ALL")
+    );
+
+    // Determine which letters have languages
+    const availableLetters = new Set(
+        languages.map((language) =>
+            language.name.charAt(0).toUpperCase()
+        )
+    );
+
+    // A through Z
+    for (let code = 65; code <= 90; code++) {
+        const letter = String.fromCharCode(code);
+
+        fragment.appendChild(
+            createFilterButton(
+                letter,
+                letter,
+                !availableLetters.has(letter)
+            )
+        );
+    }
+
+    alphabetFilter.replaceChildren(fragment);
 }
 
 
 /* =========================
-   6. START HOMEPAGE
+   6. UPDATE FILTER
 ========================= */
 
-searchInput.addEventListener("input", searchLanguages);
+function updateFilter() {
+    const filteredLanguages =
+        selectedLetter === "ALL"
+            ? languages
+            : languages.filter((language) =>
+                language.name
+                    .toUpperCase()
+                    .startsWith(selectedLetter)
+            );
 
+    renderLanguages(filteredLanguages);
+
+    // Update the selected button's appearance
+    const buttons = alphabetFilter.querySelectorAll("button");
+
+    buttons.forEach((button) => {
+        const value =
+            button.textContent === "All"
+                ? "ALL"
+                : button.textContent;
+
+        button.setAttribute(
+            "aria-pressed",
+            String(value === selectedLetter)
+        );
+    });
+}
+
+
+/* =========================
+   7. ABOUT DIALOG
+========================= */
+
+aboutOpen.addEventListener("click", () => {
+    aboutDialog.showModal();
+});
+
+aboutClose.addEventListener("click", () => {
+    aboutDialog.close();
+});
+
+// Close when clicking the backdrop
+aboutDialog.addEventListener("click", (event) => {
+    if (event.target === aboutDialog) {
+        aboutDialog.close();
+    }
+});
+
+
+/* =========================
+   8. START HOMEPAGE
+========================= */
+
+createAlphabetFilter();
 renderLanguages(languages);

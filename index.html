@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,20 @@
     <meta name="description"
           content="REWORD helps you build vocabulary through repetition.">
 
-    <meta name="theme-color" content="#F5F3EE">
+    <meta name="theme-color" content="#F5F2ED">
 
     <title>REWORD — Vocabulary Practice</title>
 
-    <!-- CSS -->
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
+
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
 </head>
 
 <body>
@@ -25,7 +34,19 @@
             <span class="brand-name">reword<span class="brand-dot">.</span></span>
         </a>
 
-        <span class="header-label">VOCABULARY PRACTICE</span>
+        <div class="header-actions">
+            <span class="header-label">VOCABULARY PRACTICE</span>
+
+            <button
+                class="about-button"
+                id="about-open"
+                type="button"
+                aria-haspopup="dialog"
+                aria-controls="about-dialog"
+            >
+                About
+            </button>
+        </div>
 
     </header>
 
@@ -33,14 +54,13 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
 
-        <!-- INTRODUCTION -->
         <section class="intro">
-            <p class="eyebrow">YOUR LANGUAGE JOURNEY STARTS HERE</p>
+            <p class="eyebrow">Come for a word before the word comes for you.</p>
 
-            <h1>Choose your language.</h1>
+            <h1>Where will your curiosity take you?</h1>
 
             <p class="intro-description">
-                Build your vocabulary, one word at a time.
+                Choose a language and give your memory a little workout! XD
             </p>
         </section>
 
@@ -49,7 +69,12 @@
         <section class="language-section">
 
             <div class="catalog-heading">
-                <h2>Explore languages</h2>
+                <div>
+                    <h2>Explore languages</h2>
+                    <p class="catalog-subtitle">
+                        Choose a letter to explore.
+                    </p>
+                </div>
 
                 <span id="language-count" class="language-count">
                     15 languages
@@ -57,52 +82,25 @@
             </div>
 
 
-            <!-- SEARCH -->
-            <label class="search-box" for="language-search">
-
-                <svg
-                    class="search-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="10.8"
-                        cy="10.8"
-                        r="6.8"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                    />
-
-                    <path
-                        d="m16 16 4.3 4.3"
-                        stroke="currentColor"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-                </svg>
-
-                <input
-                    type="search"
-                    id="language-search"
-                    placeholder="Search languages..."
-                    autocomplete="off"
-                    spellcheck="false"
-                >
-
-            </label>
+            <!-- A–Z FILTER -->
+            <nav
+                id="alphabet-filter"
+                class="alphabet-filter"
+                aria-label="Filter languages alphabetically"
+            >
+                <!-- JavaScript inserts the filter buttons here. -->
+            </nav>
 
 
-            <!-- JAVASCRIPT WILL INSERT LANGUAGE CARDS HERE -->
+            <!-- LANGUAGE CARDS -->
             <div
                 id="language-grid"
                 class="language-grid"
             ></div>
 
 
-            <!-- EMPTY SEARCH RESULT -->
             <p id="empty-message" class="empty-message" hidden>
-                No languages found. Try another search.
+                No languages start with this letter.
             </p>
 
         </section>
@@ -110,14 +108,66 @@
     </main>
 
 
+    <!-- ABOUT DIALOG -->
+    <dialog
+        id="about-dialog"
+        class="about-dialog"
+        aria-labelledby="about-title"
+    >
+        <div class="about-content">
+
+            <div class="about-heading">
+                <div>
+                    <p class="eyebrow">THE IDEA BEHIND REWORD</p>
+                    <h2 id="about-title">Why REWORD?</h2>
+                </div>
+
+                <button
+                    class="about-close"
+                    id="about-close"
+                    type="button"
+                    aria-label="Close About"
+                >
+                    &times;
+                </button>
+            </div>
+
+     <p>
+    REWORD began with a personal need: I wanted my own
+    language-learning library with visual references and
+    tools to help me remember vocabulary. I believe words
+    are a good place to start — after all, how can we build
+    sentences without knowing the words? Unable to afford
+    expensive courses, I decided to build the learning
+    space I wished I had.
+</p>
+
+<p>
+    I'm still learning to code, with AI helping along the
+    way, but the ideas come from my own needs, and the 3D
+    images are made by me. REWORD is free for personal use.
+    For other licensing needs, please contact me first.
+    This project is still a work in progress, so mistakes
+    may happen. If you find it useful, optional donations
+    are welcome.
+</p>
+
+<div class="about-quote">
+    Repeat. Recall. Remember.
+</div>
+
+<p class="about-signature">
+    REWORD — Words First. Fluency Follows.
+</p>
+
+        </div>
+    </dialog>
+
+
     <!-- FOOTER -->
     <footer class="site-footer">
-        <p>REWORD · Repeat. Recall. Remember.</p>
+        <p>REWORD <span>·</span> Repeat. Recall. Remember.</p>
     </footer>
-
-
-    <!-- JAVASCRIPT: PLACED AT THE BOTTOM -->
-    <script src="js/script.js"></script>
 
 </body>
 </html>
