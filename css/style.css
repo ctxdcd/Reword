@@ -746,3 +746,193 @@ h1 {
         animation: none !important;
     }
 }
+
+
+
+/* ========================================
+   15. MEMORY BUTTON
+======================================== */
+
+.memory-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 18px;
+    padding: 8px 12px;
+
+    border: 1px solid rgba(139, 13, 26, 0.20);
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--muted-text);
+
+    font-size: 12px;
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        border-color 160ms ease,
+        background-color 160ms ease;
+}
+
+.memory-button:hover {
+    border-color: var(--crimson);
+    background: rgba(139, 13, 26, 0.045);
+    color: var(--crimson);
+}
+
+.memory-button-icon {
+    color: var(--crimson);
+    font-size: 14px;
+}
+
+
+/* ========================================
+   16. MEMORY DIALOG
+======================================== */
+
+.memory-dialog {
+    width: min(460px, calc(100% - 32px));
+    max-width: 460px;
+    max-height: min(80vh, 620px);
+    padding: 0;
+
+    overflow-y: auto;
+
+    border: 1px solid rgba(11, 11, 11, 0.08);
+    border-radius: 16px;
+
+    background: var(--off-white);
+    color: var(--black);
+
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.20);
+}
+
+.memory-dialog::backdrop {
+    background: rgba(11, 11, 11, 0.52);
+}
+
+.memory-content {
+    padding: 28px;
+}
+
+.memory-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-bottom: 28px;
+}
+
+.memory-eyebrow {
+    margin: 0 0 12px;
+
+    color: var(--crimson);
+    font-family: "Special Elite", monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    line-height: 1.6;
+}
+
+.memory-heading h2 {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 750;
+    line-height: 1.25;
+    letter-spacing: -0.7px;
+}
+
+.memory-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 34px;
+
+    width: 34px;
+    height: 34px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(11, 11, 11, 0.055);
+    color: var(--black);
+
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+.memory-close:hover {
+    background: var(--crimson);
+    color: var(--white);
+}
+
+.memory-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.memory-entry {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.memory-entry:first-child {
+    padding-top: 0;
+}
+
+.memory-label {
+    display: block;
+    margin-bottom: 8px;
+
+    color: var(--muted-text);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1.3px;
+}
+
+.memory-entry p {
+    margin: 0;
+
+    color: #514D49;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.memory-entry-final p {
+    color: var(--crimson);
+    font-weight: 750;
+}
+
+.memory-footer {
+    margin: 22px 0 0;
+
+    color: var(--muted-text);
+    font-family: "Special Elite", monospace;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+
+/* MEMORY DIALOG — MOBILE */
+
+@media (max-width: 420px) {
+    .memory-content {
+        padding: 22px;
+    }
+
+    .memory-heading h2 {
+        font-size: 22px;
+    }
+
+    .memory-entry p {
+        font-size: 13px;
+    }
+}

@@ -226,8 +226,40 @@ aboutDialog.addEventListener("click", (event) => {
 });
 
 
+
+/* ========================================
+   8. MEMORY DIALOG
+======================================== */
+
+const memoryOpen = document.getElementById("memory-open");
+const memoryDialog = document.getElementById("memory-dialog");
+const memoryClose = document.getElementById("memory-close");
+
+if (memoryOpen && memoryDialog && memoryClose) {
+
+    // Open the dialog
+    memoryOpen.addEventListener("click", () => {
+        memoryDialog.showModal();
+    });
+
+    // Close using the X button
+    memoryClose.addEventListener("click", () => {
+        memoryDialog.close();
+    });
+
+    // Close when clicking outside the dialog
+    memoryDialog.addEventListener("click", (event) => {
+        if (event.target === memoryDialog) {
+            memoryDialog.close();
+        }
+    });
+
+}
+
+
+
 /* =========================
-   8. START HOMEPAGE
+   9. START HOMEPAGE
 ========================= */
 
 createAlphabetFilter();
