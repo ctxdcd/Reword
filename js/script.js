@@ -1,68 +1,64 @@
-
 "use strict";
 
-/* =========================
-   1. LANGUAGE DATA
-========================= */
+// ========================================
+// 1. LANGUAGE DATA
+// ========================================
 
 const languages = [
-    { name: "Arabic", native: "العربية", image: "arabic.webp" },
-    { name: "Chinese (Mandarin)", native: "中文", image: "chinese.webp" },
-    { name: "French", native: "Français", image: "french.webp" },
-    { name: "German", native: "Deutsch", image: "german.webp" },
-    { name: "Hindi", native: "हिन्दी", image: "hindi.webp" },
-    { name: "Italian", native: "Italiano", image: "italian.webp" },
-    { name: "Japanese", native: "日本語", image: "japanese.webp" },
-    { name: "Korean", native: "한국어", image: "korean.webp" },
-    { name: "Kurdish", native: "Kurdî · کوردی", image: "kurdish.webp" },
-    { name: "Malay", native: "Bahasa Melayu", image: "malay.webp" },
-    { name: "Portuguese", native: "Português", image: "portuguese.webp" },
-    { name: "Russian", native: "Русский", image: "russian.webp" },
-    { name: "Spanish", native: "Español", image: "spanish.webp" },
-    { name: "Turkish", native: "Türkçe", image: "turkish.webp" },
-    { name: "Vietnamese", native: "Tiếng Việt", image: "vietnamese.webp" }
+    { name: "Arabic", native: "العربية", image: "arabic.webp", slug: "arabic" },
+    { name: "Chinese (Mandarin)", native: "中文", image: "chinese.webp", slug: "chinese" },
+    { name: "French", native: "Français", image: "french.webp", slug: "french" },
+    { name: "German", native: "Deutsch", image: "german.webp", slug: "german" },
+    { name: "Hindi", native: "हिन्दी", image: "hindi.webp", slug: "hindi" },
+    { name: "Italian", native: "Italiano", image: "italian.webp", slug: "italian" },
+    { name: "Japanese", native: "日本語", image: "japanese.webp", slug: "japanese", page: true },
+    { name: "Korean", native: "한국어", image: "korean.webp", slug: "korean" },
+    { name: "Kurdish", native: "Kurdî · کوردی", image: "kurdish.webp", slug: "kurdish" },
+    { name: "Malay", native: "Bahasa Melayu", image: "malay.webp", slug: "malay" },
+    { name: "Portuguese", native: "Português", image: "portuguese.webp", slug: "portuguese" },
+    { name: "Russian", native: "Русский", image: "russian.webp", slug: "russian" },
+    { name: "Spanish", native: "Español", image: "spanish.webp", slug: "spanish" },
+    { name: "Turkish", native: "Türkçe", image: "turkish.webp", slug: "turkish" },
+    { name: "Vietnamese", native: "Tiếng Việt", image: "vietnamese.webp", slug: "vietnamese" }
 ];
 
 
-/* =========================
-   2. HTML ELEMENTS
-========================= */
+// ========================================
+// 2. LANGUAGE CARDS
+// ========================================
 
-const languageGrid = document.querySelector("#language-grid");
-const languageCount = document.querySelector("#language-count");
-const emptyMessage = document.querySelector("#empty-message");
-const alphabetFilter = document.querySelector("#alphabet-filter");
-
-const aboutDialog = document.querySelector("#about-dialog");
-const aboutOpen = document.querySelector("#about-open");
-const aboutClose = document.querySelector("#about-close");
-
-
-/* =========================
-   3. CREATE LANGUAGE CARD
-========================= */
+const languageGrid = document.getElementById("language-grid");
+const languageCount = document.getElementById("language-count");
+const emptyMessage = document.getElementById("empty-message");
 
 function createLanguageCard(language) {
-    const card = document.createElement("article");
+    // Japanese uses a link; other languages remain non-clickable.
+    const card = document.createElement(language.page ? "a" : "article");
+
     card.className = "language-card";
 
-    // Thumbnail
+    if (language.page) {
+        card.href = `languages/${language.slug}/index.html`;
+        card.setAttribute("aria-label", "Learn Japanese — 日本語");
+    }
+
+    // Language thumbnail
     const image = document.createElement("img");
+
     image.className = "language-image";
     image.src = `assets/images/${language.image}`;
     image.alt = "";
     image.width = 44;
     image.height = 44;
     image.loading = "lazy";
-    image.decoding = "async";
 
-    // Placeholder if the image is unavailable
+    // Display a placeholder if the image is missing.
     image.addEventListener("error", () => {
-        const placeholder = document.createElement("div");
+        const placeholder = document.createElement("span");
 
         placeholder.className = "image-placeholder";
-        placeholder.setAttribute("aria-hidden", "true");
         placeholder.textContent = "RW";
+        placeholder.setAttribute("aria-hidden", "true");
 
         image.replaceWith(placeholder);
     }, { once: true });
@@ -79,188 +75,161 @@ function createLanguageCard(language) {
     native.className = "language-native";
     native.textContent = language.native;
 
-    const status = document.createElement("span");
-    status.className = "language-status";
-    status.textContent = "Coming soon";
+    info.append(name, native);
 
-    info.append(name, native, status);
+    // Show status only when the page is not ready.
+    if (!language.page) {
+        const status = document.createElement("span");
+
+        status.className = "language-status";
+        status.textContent = "Coming soon";
+
+        info.append(status);
+    }
+
     card.append(image, info);
 
     return card;
 }
 
+function renderLanguages(languageList) {
+    languageGrid.replaceChildren();
 
-/* =========================
-   4. DISPLAY LANGUAGES
-========================= */
-
-function renderLanguages(items) {
-    const fragment = document.createDocumentFragment();
-
-    items.forEach((language) => {
-        fragment.appendChild(createLanguageCard(language));
+    languageList.forEach((language) => {
+        languageGrid.appendChild(createLanguageCard(language));
     });
-
-    languageGrid.replaceChildren(fragment);
 
     languageCount.textContent =
-        `${items.length} ${items.length === 1 ? "language" : "languages"}`;
+        `${languageList.length} ${languageList.length === 1 ? "language" : "languages"}`;
 
-    emptyMessage.hidden = items.length !== 0;
+    emptyMessage.hidden = languageList.length !== 0;
 }
 
 
-/* =========================
-   5. CREATE A–Z FILTER
-========================= */
+// ========================================
+// 3. A–Z FILTER
+// Matches the existing CSS class names.
+// ========================================
 
-let selectedLetter = "ALL";
+const alphabetFilter = document.getElementById("alphabet-filter");
 
-function createFilterButton(label, value, disabled = false) {
-    const button = document.createElement("button");
-
-    button.type = "button";
-    button.className = "letter-button";
-    button.textContent = label;
-    button.disabled = disabled;
-
-    button.setAttribute(
-        "aria-pressed",
-        String(selectedLetter === value)
-    );
-
-    if (value === "ALL") {
-        button.classList.add("all-button");
-    }
-
-    button.addEventListener("click", () => {
-        selectedLetter = value;
-        updateFilter();
-    });
-
-    return button;
-}
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 function createAlphabetFilter() {
-    const fragment = document.createDocumentFragment();
+    alphabetFilter.replaceChildren();
 
-    // All languages button
-    fragment.appendChild(
-        createFilterButton("All", "ALL")
-    );
+    // ALL BUTTON
+    const allButton = document.createElement("button");
 
-    // Determine which letters have languages
-    const availableLetters = new Set(
-        languages.map((language) =>
-            language.name.charAt(0).toUpperCase()
-        )
-    );
+    allButton.type = "button";
+    allButton.className = "letter-button all-button";
+    allButton.textContent = "All";
+    allButton.dataset.letter = "all";
+    allButton.setAttribute("aria-pressed", "true");
 
-    // A through Z
-    for (let code = 65; code <= 90; code++) {
-        const letter = String.fromCharCode(code);
+    allButton.addEventListener("click", () => {
+        updateFilter("all");
+    });
 
-        fragment.appendChild(
-            createFilterButton(
-                letter,
-                letter,
-                !availableLetters.has(letter)
-            )
+    alphabetFilter.appendChild(allButton);
+
+    // A–Z BUTTONS
+    alphabet.forEach((letter) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "letter-button";
+        button.textContent = letter;
+        button.dataset.letter = letter;
+        button.setAttribute("aria-pressed", "false");
+
+        const hasLanguage = languages.some((language) =>
+            language.name.toUpperCase().startsWith(letter)
         );
-    }
 
-    alphabetFilter.replaceChildren(fragment);
+        button.disabled = !hasLanguage;
+
+        button.addEventListener("click", () => {
+            updateFilter(letter);
+        });
+
+        alphabetFilter.appendChild(button);
+    });
 }
 
-
-/* =========================
-   6. UPDATE FILTER
-========================= */
-
-function updateFilter() {
-    const filteredLanguages =
-        selectedLetter === "ALL"
-            ? languages
-            : languages.filter((language) =>
-                language.name
-                    .toUpperCase()
-                    .startsWith(selectedLetter)
-            );
+function updateFilter(letter) {
+    const filteredLanguages = letter === "all"
+        ? languages
+        : languages.filter((language) =>
+            language.name.toUpperCase().startsWith(letter)
+        );
 
     renderLanguages(filteredLanguages);
 
-    // Update the selected button's appearance
-    const buttons = alphabetFilter.querySelectorAll("button");
+    const buttons = alphabetFilter.querySelectorAll(".letter-button");
 
     buttons.forEach((button) => {
-        const value =
-            button.textContent === "All"
-                ? "ALL"
-                : button.textContent;
+        const isActive = button.dataset.letter === letter;
 
-        button.setAttribute(
-            "aria-pressed",
-            String(value === selectedLetter)
-        );
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
     });
 }
 
 
-/* =========================
-   7. ABOUT DIALOG
-========================= */
+// ========================================
+// 4. ABOUT DIALOG
+// ========================================
 
-aboutOpen.addEventListener("click", () => {
-    aboutDialog.showModal();
-});
+const aboutOpen = document.getElementById("about-open");
+const aboutDialog = document.getElementById("about-dialog");
+const aboutClose = document.getElementById("about-close");
 
-aboutClose.addEventListener("click", () => {
-    aboutDialog.close();
-});
+if (aboutOpen && aboutDialog && aboutClose) {
+    aboutOpen.addEventListener("click", () => {
+        aboutDialog.showModal();
+    });
 
-// Close when clicking the backdrop
-aboutDialog.addEventListener("click", (event) => {
-    if (event.target === aboutDialog) {
+    aboutClose.addEventListener("click", () => {
         aboutDialog.close();
-    }
-});
+    });
+
+    aboutDialog.addEventListener("click", (event) => {
+        if (event.target === aboutDialog) {
+            aboutDialog.close();
+        }
+    });
+}
 
 
-
-/* ========================================
-   8. MEMORY DIALOG
-======================================== */
+// ========================================
+// 5. MEMORY DIALOG
+// ========================================
 
 const memoryOpen = document.getElementById("memory-open");
 const memoryDialog = document.getElementById("memory-dialog");
 const memoryClose = document.getElementById("memory-close");
 
 if (memoryOpen && memoryDialog && memoryClose) {
-
-    // Open the dialog
     memoryOpen.addEventListener("click", () => {
         memoryDialog.showModal();
     });
 
-    // Close using the X button
     memoryClose.addEventListener("click", () => {
         memoryDialog.close();
     });
 
-    // Close when clicking outside the dialog
     memoryDialog.addEventListener("click", (event) => {
         if (event.target === memoryDialog) {
             memoryDialog.close();
         }
     });
-
 }
 
 
-
-/* =========================
-   9. START HOMEPAGE
-========================= */
+// ========================================
+// 6. INITIALIZE HOMEPAGE
+// ========================================
 
 createAlphabetFilter();
 renderLanguages(languages);
